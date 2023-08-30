@@ -1,6 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { expect } from 'vitest';
 import ProductPage from '../components/ProductPage';
 import getPrice from '../helpers/generatePriceFromId';
@@ -13,80 +11,31 @@ const game = {
   background_image: 'https://imagesbank.com/2349302'
 };
 
-const url = `https://api.rawg.io/api/games/`;
-const server = setupServer(
-  ...[
-    rest.get(url + game.id, (req, res, ctx) => {
-      return res(ctx.json(game));
-    }),
+it('Renders game title and description', () => {
+  render(<ProductPage game={game} />);
 
-    rest.get(url, (req, res, ctx) => {
-      return res(ctx.status(404));
-    })
-  ]
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-it('Renders loading at first', async () => {
-  render(<ProductPage id={game.id} />);
-
-  expect(screen.getByText('Is Loading')).toBeInTheDocument();
-  expect(screen.queryByRole('heading')).not.toBeInTheDocument();
-  expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: game.name })).toBeInTheDocument();
+  expect(
+    screen.getByText('This is a very long description', { exact: false })
+  ).toBeInTheDocument();
 });
 
-it('Renders game data after fetching', async () => {
-  render(<ProductPage id={game.id} />);
-
-  await screen.findByRole('heading', { name: game.name });
-
-  expect(screen.getByRole('heading')).toBeInTheDocument();
-  expect(screen.queryByText('Is Loading')).not.toBeInTheDocument();
-  expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
-});
-
-it('Renders price correctly', async () => {
+it('Renders price correctly', () => {
   const price = getPrice(game.id).toString();
-
-  render(<ProductPage id={game.id} />);
-
-  await screen.findByRole('heading', { name: 'Game Title' });
+  render(<ProductPage game={game} />);
 
   expect(screen.getByText(price, { exact: false })).toBeInTheDocument();
 });
 
-it('Renders image', async () => {
-  render(<ProductPage id={game.id} />);
-
-  await screen.findByRole('heading', { name: 'Game Title' });
+it('Renders image', () => {
+  render(<ProductPage game={game} />);
 
   expect(screen.getByRole('img').src).toEqual(game.background_image);
   expect(screen.getByRole('img').alt).toEqual(game.name);
 });
 
-it('Handles error responses', async () => {
-  server.use(
-    rest.get(url + game.id, (req, res, ctx) => {
-      return res(ctx.status(500));
-    })
-  );
+it('Renders add to cart button', () => {
+  render(<ProductPage game={game} />);
 
-  render(<ProductPage id={game.id} />);
-
-  await screen.findByText('error', { exact: false });
-
-  expect(screen.findByText('error', { exact: false })).toBeInTheDocument;
-  expect(screen.queryByRole('heading')).not.toBeInTheDocument();
-});
-
-it('Shows error when no id is passed', async () => {
-  render(<ProductPage />);
-
-  await screen.findByText('error', { exact: false });
-
-  expect(screen.findByText('error', { exact: false })).toBeInTheDocument;
-  expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', 'Add to Cart')).toBeInTheDocument();
 });

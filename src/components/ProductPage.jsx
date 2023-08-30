@@ -1,29 +1,22 @@
-import useUrlFetch from '../hooks/useUrlFetch';
 import getPrice from '../helpers/generatePriceFromId';
 import prepareText from '../helpers/prepareText';
 import PropTypes from 'prop-types';
+import AddToCartButton from './AddToCartButton';
 
-const baseUrl = 'https://api.rawg.io/api/games/';
-
-function ProductPage({ id }) {
-  const gameUrl = id ? baseUrl + id.toString() : baseUrl;
-  const [data, loading, error] = useUrlFetch(gameUrl);
-
-  if (loading) return 'Is Loading';
-  if (error) return error.toString();
-
+function ProductPage({ game }) {
   return (
     <div>
-      <img src={data.background_image} alt={data.name} />
-      <h1>{data.name}</h1>
-      <p>{prepareText(data.description_raw)}</p>
-      <p>${getPrice(data.id)}</p>
+      <img src={game.background_image} alt={game.name} />
+      <h1>{game.name}</h1>
+      <p>{prepareText(game.description_raw)}</p>
+      <p>${getPrice(game.id)}</p>
+      <AddToCartButton />
     </div>
   );
 }
 
 ProductPage.propTypes = {
-  id: PropTypes.number
+  game: PropTypes.object
 };
 
 export default ProductPage;
