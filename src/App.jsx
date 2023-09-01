@@ -1,7 +1,12 @@
+import Header from './components/Header';
+import Footer from './components/Footer';
+
 function App() {
   return (
     <>
-      <h1 className="text-center text-orange-900">I am a heading</h1>
+      <Header />
+      <main></main>
+      <Footer />
     </>
   );
 }

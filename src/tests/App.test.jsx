@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { expect, vi } from 'vitest';
-import Root from '../components/Root';
+import App from '../App';
 
 vi.mock('../components/Header', () => ({
   default: () => <header>header</header>
@@ -11,7 +11,7 @@ vi.mock('../components/Footer', () => ({
 }));
 
 it('Renders header, main, and footer', () => {
-  render(<Root />);
+  render(<App />);
 
   expect(screen.getByText('header')).toBeInTheDocument();
   expect(screen.getByRole('main')).toBeInTheDocument();
