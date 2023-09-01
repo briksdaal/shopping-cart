@@ -25,7 +25,7 @@ vi.mock('../components/ProductCard', () => ({
 
 it('Renders products when array is bigger than 0', () => {
   render(<Products data={products} />);
-  screen.debug();
+
   expect(screen.getAllByRole('heading')).toHaveLength(3);
   expect(
     screen.queryByRole('heading', { name: 'Sorry, this seems to be empty' })
@@ -33,7 +33,7 @@ it('Renders products when array is bigger than 0', () => {
 });
 
 it('Renders empty message when array is empty', () => {
-  render(<Products data={[]} />);
+  render(<Products data={{ results: [] }} />);
 
   expect(
     screen.getByRole('heading', { name: 'Sorry, this seems to be empty' })

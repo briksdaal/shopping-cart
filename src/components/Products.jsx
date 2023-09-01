@@ -16,6 +16,6 @@ function Products({ data }) {
 }
 
 Products.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.object
 };
 export default Products;
