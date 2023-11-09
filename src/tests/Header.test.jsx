@@ -35,22 +35,22 @@ it('Renders navbar', () => {
 });
 
 it('Navbar contains home, shop and about us', () => {
-  const items = ['Home', 'Shop', 'About Us'];
+  const items = ['Home', 'Shop', 'About Us', 'Cart'];
   renderHeader();
 
   const navItems = within(screen.getByRole('navigation')).getAllByRole(
     'listitem'
   );
 
-  expect(navItems).toHaveLength(3);
+  expect(navItems).toHaveLength(items.length);
   navItems.forEach((item, i) => {
     expect(within(item).getByText(items[i])).toBeInTheDocument();
   });
 });
 
 it('Navbar element contain appropriate links', () => {
-  const items = ['Home', 'Shop', 'About Us'];
-  const links = ['/', '/shop', '/about'];
+  const items = ['Home', 'Shop', 'About Us', 'Cart'];
+  const links = ['/', '/shop', '/about', '/cart'];
   renderHeader();
 
   const navItems = within(screen.getByRole('navigation')).getAllByRole(
@@ -58,9 +58,14 @@ it('Navbar element contain appropriate links', () => {
   );
 
   navItems.forEach((item, i) => {
-    expect(within(item).getByRole('link', { name: items[i] })).toHaveAttribute(
-      'href',
-      links[i]
-    );
+    if (i === items.length - 1) {
+      expect(
+        within(item).getByRole('button', { name: items[i] })
+      ).toBeInTheDocument();
+    } else {
+      expect(
+        within(item).getByRole('link', { name: items[i] })
+      ).toHaveAttribute('href', links[i]);
+    }
   });
 });
