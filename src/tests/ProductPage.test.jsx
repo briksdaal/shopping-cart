@@ -12,7 +12,7 @@ const game = {
 };
 
 it('Renders game title and description', () => {
-  render(<ProductPage product={game} />);
+  render(<ProductPage data={game} />);
 
   expect(screen.getByRole('heading', { name: game.name })).toBeInTheDocument();
   expect(
@@ -22,20 +22,20 @@ it('Renders game title and description', () => {
 
 it('Renders price correctly', () => {
   const price = getPrice(game.id).toString();
-  render(<ProductPage product={game} />);
+  render(<ProductPage data={game} />);
 
   expect(screen.getByText(price, { exact: false })).toBeInTheDocument();
 });
 
 it('Renders image', () => {
-  render(<ProductPage product={game} />);
+  render(<ProductPage data={game} />);
 
   expect(screen.getByRole('img').src).toEqual(game.background_image);
   expect(screen.getByRole('img').alt).toEqual(game.name);
 });
 
 it('Renders add to cart button', () => {
-  render(<ProductPage product={game} />);
+  render(<ProductPage data={game} />);
 
   expect(screen.getByRole('button', 'Add to Cart')).toBeInTheDocument();
 });

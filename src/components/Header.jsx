@@ -1,19 +1,21 @@
+import { Link } from 'react-router-dom';
+
 export default function Header() {
   return (
     <header>
       <h1>
-        <a href="/">Retro Potato</a>
+        <Link to="/">Retro Potato</Link>
       </h1>
       <nav>
         <ul>
           <li>
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="/shop">Shop</a>
+            <Link to="/shop">Shop</Link>
           </li>
           <li>
-            <a href="/about">About Us</a>
+            <Link to="/about">About Us</Link>
           </li>
         </ul>
       </nav>

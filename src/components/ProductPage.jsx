@@ -3,20 +3,20 @@ import prepareText from '../helpers/prepareText';
 import PropTypes from 'prop-types';
 import AddToCartButton from './AddToCartButton';
 
-function ProductPage({ product }) {
+function ProductPage({ data }) {
   return (
     <div>
-      <img src={product.background_image} alt={product.name} />
-      <h1>{product.name}</h1>
-      <p>{prepareText(product.description_raw)}</p>
-      <p>${getPrice(product.id)}</p>
+      <img src={data.background_image} alt={data.name} />
+      <h1>{data.name}</h1>
+      <p>{prepareText(data.description_raw)}</p>
+      <p>${getPrice(data.id)}</p>
       <AddToCartButton />
     </div>
   );
 }
 
 ProductPage.propTypes = {
-  product: PropTypes.object
+  data: PropTypes.object
 };
 
 export default ProductPage;
