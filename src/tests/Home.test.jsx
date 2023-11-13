@@ -5,5 +5,7 @@ import Home from '../components/Home';
 it('Renders content', () => {
   render(<Home />);
 
-  expect(screen.getByText('Retro Potato')).toBeInTheDocument();
+  expect(
+    screen.getByText('This is the homepage of the Retro Potato shop')
+  ).toBeInTheDocument();
 });
