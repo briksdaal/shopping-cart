@@ -15,7 +15,7 @@ function ProductCard({ product, qty, onChange }) {
         />
         <h3>{product.name}</h3>
       </Link>
-      <p>{getPrice(product.id)}</p>
+      <p>${getPrice(product.id)}</p>
       <AddToCartButton qty={qty} onChange={onChange} />
     </div>
   );

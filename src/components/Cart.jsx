@@ -18,7 +18,7 @@ function Cart() {
       />
       {totalCartSum !== 0 && (
         <div>
-          <h3>Total Sum: {totalCartSum}$</h3>
+          <h3>Total Sum: ${totalCartSum}</h3>
           <Link to="/checkout">Proceed to Checkout</Link>
         </div>
       )}
