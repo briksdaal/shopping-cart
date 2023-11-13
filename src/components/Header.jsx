@@ -18,7 +18,7 @@ export default function Header() {
             <Link to="/about">About Us</Link>
           </li>
           <li>
-            <button>Cart</button>
+            <Link to="/cart">Cart</Link>
           </li>
         </ul>
       </nav>

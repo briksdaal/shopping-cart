@@ -58,14 +58,9 @@ it('Navbar element contain appropriate links', () => {
   );
 
   navItems.forEach((item, i) => {
-    if (i === items.length - 1) {
-      expect(
-        within(item).getByRole('button', { name: items[i] })
-      ).toBeInTheDocument();
-    } else {
-      expect(
-        within(item).getByRole('link', { name: items[i] })
-      ).toHaveAttribute('href', links[i]);
-    }
+    expect(within(item).getByRole('link', { name: items[i] })).toHaveAttribute(
+      'href',
+      links[i]
+    );
   });
 });
