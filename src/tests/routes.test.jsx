@@ -52,6 +52,16 @@ it('Render cart page', async () => {
   ).toBeInTheDocument();
 });
 
+it('Render checkout page', async () => {
+  renderMemoryRouter('/checkout');
+
+  expect(
+    screen.getByRole('heading', {
+      name: 'Checkout'
+    })
+  ).toBeInTheDocument();
+});
+
 it('Render error page', async () => {
   renderMemoryRouter('/asdf');
 
