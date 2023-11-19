@@ -35,7 +35,7 @@ it('Renders navbar', () => {
 });
 
 it('Navbar contains home, shop and about us', () => {
-  const items = ['Home', 'Shop', 'About Us', 'Cart'];
+  const items = ['Home', 'Shop', 'About Us', 'cart'];
   renderHeader();
 
   const navItems = within(screen.getByRole('navigation')).getAllByRole(
@@ -44,6 +44,10 @@ it('Navbar contains home, shop and about us', () => {
 
   expect(navItems).toHaveLength(items.length);
   navItems.forEach((item, i) => {
+    if (i === items.length - 1) {
+      expect(within(item).getByTestId(items[i])).toBeInTheDocument();
+      return;
+    }
     expect(within(item).getByText(items[i])).toBeInTheDocument();
   });
 });
@@ -58,6 +62,10 @@ it('Navbar element contain appropriate links', () => {
   );
 
   navItems.forEach((item, i) => {
+    if (i === items.length - 1) {
+      expect(within(item).getByRole('link')).toHaveAttribute('href', links[i]);
+      return;
+    }
     expect(within(item).getByRole('link', { name: items[i] })).toHaveAttribute(
       'href',
       links[i]

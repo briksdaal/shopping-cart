@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa';
 
 export default function Header() {
   return (
@@ -18,7 +19,9 @@ export default function Header() {
             <Link to="/about">About Us</Link>
           </li>
           <li>
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">
+              <FaShoppingCart data-testid="cart" />
+            </Link>
           </li>
         </ul>
       </nav>
