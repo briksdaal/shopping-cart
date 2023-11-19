@@ -3,72 +3,98 @@ import { expect } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import Header from '../components/Header';
 
-const renderHeader = () => {
-  render(<Header />, {
+const renderHeader = (numOfItemsInCart) => {
+  render(<Header numOfItemsInCart={numOfItemsInCart} />, {
     wrapper: ({ children }) => {
       return <BrowserRouter>{children}</BrowserRouter>;
     }
   });
 };
 
-it('Renders title', () => {
-  renderHeader();
+describe('Nav items tests', () => {
+  it('Renders title', () => {
+    renderHeader();
 
-  expect(
-    screen.getByRole('heading', { name: 'Retro Potato' })
-  ).toBeInTheDocument();
-});
+    expect(
+      screen.getByRole('heading', { name: 'Retro Potato' })
+    ).toBeInTheDocument();
+  });
 
-it('Titles links to root', () => {
-  renderHeader();
+  it('Titles links to root', () => {
+    renderHeader();
 
-  expect(screen.getByRole('link', { name: 'Retro Potato' })).toHaveAttribute(
-    'href',
-    '/'
-  );
-});
+    expect(screen.getByRole('link', { name: 'Retro Potato' })).toHaveAttribute(
+      'href',
+      '/'
+    );
+  });
 
-it('Renders navbar', () => {
-  renderHeader();
+  it('Renders navbar', () => {
+    renderHeader();
 
-  expect(screen.getByRole('navigation')).toBeInTheDocument();
-});
+    expect(screen.getByRole('navigation')).toBeInTheDocument();
+  });
 
-it('Navbar contains home, shop and about us', () => {
-  const items = ['Home', 'Shop', 'About Us', 'cart'];
-  renderHeader();
+  it('Navbar contains home, shop and about us', () => {
+    const items = ['Home', 'Shop', 'About Us', 'cart'];
+    renderHeader();
 
-  const navItems = within(screen.getByRole('navigation')).getAllByRole(
-    'listitem'
-  );
+    const navItems = within(screen.getByRole('navigation')).getAllByRole(
+      'listitem'
+    );
 
-  expect(navItems).toHaveLength(items.length);
-  navItems.forEach((item, i) => {
-    if (i === items.length - 1) {
-      expect(within(item).getByTestId(items[i])).toBeInTheDocument();
-      return;
-    }
-    expect(within(item).getByText(items[i])).toBeInTheDocument();
+    expect(navItems).toHaveLength(items.length);
+    navItems.forEach((item, i) => {
+      if (i === items.length - 1) {
+        expect(within(item).getByTestId(items[i])).toBeInTheDocument();
+        return;
+      }
+      expect(within(item).getByText(items[i])).toBeInTheDocument();
+    });
+  });
+
+  it('Navbar element contain appropriate links', () => {
+    const items = ['Home', 'Shop', 'About Us', 'Cart'];
+    const links = ['/', '/shop', '/about', '/cart'];
+    renderHeader();
+
+    const navItems = within(screen.getByRole('navigation')).getAllByRole(
+      'listitem'
+    );
+
+    navItems.forEach((item, i) => {
+      if (i === items.length - 1) {
+        expect(within(item).getByRole('link')).toHaveAttribute(
+          'href',
+          links[i]
+        );
+        return;
+      }
+      expect(
+        within(item).getByRole('link', { name: items[i] })
+      ).toHaveAttribute('href', links[i]);
+    });
   });
 });
 
-it('Navbar element contain appropriate links', () => {
-  const items = ['Home', 'Shop', 'About Us', 'Cart'];
-  const links = ['/', '/shop', '/about', '/cart'];
-  renderHeader();
-
-  const navItems = within(screen.getByRole('navigation')).getAllByRole(
-    'listitem'
-  );
-
-  navItems.forEach((item, i) => {
-    if (i === items.length - 1) {
-      expect(within(item).getByRole('link')).toHaveAttribute('href', links[i]);
-      return;
-    }
-    expect(within(item).getByRole('link', { name: items[i] })).toHaveAttribute(
-      'href',
-      links[i]
+describe('Cart counter tests', () => {
+  it('Shows no counter when cart is empty', () => {
+    renderHeader(0);
+    const navItems = within(screen.getByRole('navigation')).getAllByRole(
+      'listitem'
     );
+    const cartItem = navItems[navItems.length - 1];
+
+    expect(within(cartItem).queryByText('0')).not.toBeInTheDocument();
+  });
+
+  it("Shows correct counter when cart isn't empty", () => {
+    renderHeader(4);
+    const navItems = within(screen.getByRole('navigation')).getAllByRole(
+      'listitem'
+    );
+    const cartItem = navItems[navItems.length - 1];
+
+    expect(within(cartItem).getByText('4')).toBeInTheDocument();
   });
 });

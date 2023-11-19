@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const numOfItemsInCart = cartItems.reduce((acc, cur) => acc + cur.qty, 0);
 
   function updateCartItemQty(product) {
     return (qty) =>
@@ -31,7 +32,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header numOfItemsInCart={numOfItemsInCart} />
       <main>
         <Outlet context={{ cartItems, updateCartItemQty }} />
       </main>

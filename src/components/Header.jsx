@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
+import { IoCartOutline } from 'react-icons/io5';
 
-export default function Header() {
+function Header({ numOfItemsInCart }) {
   return (
     <header>
       <h1>
@@ -20,7 +21,8 @@ export default function Header() {
           </li>
           <li>
             <Link to="/cart">
-              <FaShoppingCart data-testid="cart" />
+              <IoCartOutline data-testid="cart" />
+              {numOfItemsInCart !== 0 && <div>{numOfItemsInCart}</div>}
             </Link>
           </li>
         </ul>
@@ -28,3 +30,8 @@ export default function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  numOfItemsInCart: PropTypes.number
+};
+export default Header;
