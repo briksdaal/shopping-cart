@@ -2,34 +2,54 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { IoCartOutline } from 'react-icons/io5';
 
+function LinkContainer({ children }) {
+  return <div>{children}</div>;
+}
+
+LinkContainer.propTypes = {
+  children: PropTypes.element
+};
+
 function Header({ numOfItemsInCart }) {
   return (
-    <header>
-      <h1>
-        <Link to="/">
-          <img src="./public/retro_potato_icon.png" alt="Retro Potato" />
-          <img src="./public/retro_potato_logo.png" alt="Retro Potato Logo" />
-        </Link>
-      </h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/shop">Shop</Link>
-          </li>
-          <li>
-            <Link to="/about">About Us</Link>
-          </li>
-          <li>
-            <Link to="/cart">
-              <IoCartOutline data-testid="cart" />
-              {numOfItemsInCart !== 0 && <div>{numOfItemsInCart}</div>}
-            </Link>
-          </li>
-        </ul>
-      </nav>
+    <header className="flex justify-center">
+      <div className="m-4 flex w-full max-w-[1280px] justify-between gap-16">
+        <h1>
+          <Link to="/">
+            <div className="flex items-center gap-4">
+              <img
+                className="w-20"
+                src="./assets/retro_potato_icon.png"
+                alt="Retro Potato"
+              />
+              <img
+                className="w-56"
+                src="./assets/retro_potato_logo.png"
+                alt="Retro Potato Logo"
+              />
+            </div>
+          </Link>
+        </h1>
+        <nav className="grow">
+          <div className="flex h-full items-center justify-between text-xl">
+            <div className="flex gap-16">
+              <Link to="/">Home</Link>
+              <Link to="/shop">Shop</Link>
+              <Link to="/about">About Us</Link>
+            </div>
+            <div>
+              <Link to="/cart" className="relative">
+                <IoCartOutline data-testid="cart" className="text-2xl" />
+                {numOfItemsInCart !== 0 && (
+                  <div className="absolute right-0 top-0 flex h-5 w-5 translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                    {numOfItemsInCart}
+                  </div>
+                )}
+              </Link>
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
@@ -37,4 +57,5 @@ function Header({ numOfItemsInCart }) {
 Header.propTypes = {
   numOfItemsInCart: PropTypes.number
 };
+
 export default Header;

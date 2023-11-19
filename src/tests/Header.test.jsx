@@ -37,7 +37,7 @@ describe('Nav items tests', () => {
     renderHeader();
 
     const navItems = within(screen.getByRole('navigation')).getAllByRole(
-      'listitem'
+      'link'
     );
 
     expect(navItems).toHaveLength(items.length);
@@ -51,25 +51,15 @@ describe('Nav items tests', () => {
   });
 
   it('Navbar element contain appropriate links', () => {
-    const items = ['Home', 'Shop', 'About Us', 'Cart'];
     const links = ['/', '/shop', '/about', '/cart'];
     renderHeader();
 
     const navItems = within(screen.getByRole('navigation')).getAllByRole(
-      'listitem'
+      'link'
     );
 
     navItems.forEach((item, i) => {
-      if (i === items.length - 1) {
-        expect(within(item).getByRole('link')).toHaveAttribute(
-          'href',
-          links[i]
-        );
-        return;
-      }
-      expect(
-        within(item).getByRole('link', { name: items[i] })
-      ).toHaveAttribute('href', links[i]);
+      expect(item).toHaveAttribute('href', links[i]);
     });
   });
 });
@@ -78,7 +68,7 @@ describe('Cart counter tests', () => {
   it('Shows no counter when cart is empty', () => {
     renderHeader(0);
     const navItems = within(screen.getByRole('navigation')).getAllByRole(
-      'listitem'
+      'link'
     );
     const cartItem = navItems[navItems.length - 1];
 
@@ -88,7 +78,7 @@ describe('Cart counter tests', () => {
   it("Shows correct counter when cart isn't empty", () => {
     renderHeader(4);
     const navItems = within(screen.getByRole('navigation')).getAllByRole(
-      'listitem'
+      'link'
     );
     const cartItem = navItems[navItems.length - 1];
 
