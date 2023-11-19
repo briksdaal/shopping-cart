@@ -6,7 +6,10 @@ function Header({ numOfItemsInCart }) {
   return (
     <header>
       <h1>
-        <Link to="/">Retro Potato</Link>
+        <Link to="/">
+          <img src="./public/retro_potato_icon.png" alt="Retro Potato" />
+          <img src="./public/retro_potato_logo.png" alt="Retro Potato Logo" />
+        </Link>
       </h1>
       <nav>
         <ul>

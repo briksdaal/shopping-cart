@@ -15,18 +15,15 @@ describe('Nav items tests', () => {
   it('Renders title', () => {
     renderHeader();
 
-    expect(
-      screen.getByRole('heading', { name: 'Retro Potato' })
-    ).toBeInTheDocument();
+    const heading = screen.getByRole('heading');
+    expect(within(heading).getByAltText('Retro Potato')).toBeInTheDocument();
   });
 
   it('Titles links to root', () => {
     renderHeader();
 
-    expect(screen.getByRole('link', { name: 'Retro Potato' })).toHaveAttribute(
-      'href',
-      '/'
-    );
+    const heading = screen.getByRole('heading');
+    expect(within(heading).getByRole('link')).toHaveAttribute('href', '/');
   });
 
   it('Renders navbar', () => {
