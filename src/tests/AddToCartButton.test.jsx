@@ -19,7 +19,7 @@ it('Renders add to cart button when quantity is 0', () => {
 it('Renders quantity and two buttons (increment and decrement) when quantity is > 0', () => {
   render(<AddToCartButton qty={3} onChange={onChange} />);
 
-  expect(screen.getByText('3')).toBeInTheDocument();
+  expect(screen.getByText('3', { exact: false })).toBeInTheDocument();
   expect(screen.getAllByRole('button')).toHaveLength(2);
   expect(
     screen.queryByRole('button', { name: 'Add to Cart' })

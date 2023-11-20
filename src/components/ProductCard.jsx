@@ -5,17 +5,18 @@ import AddToCartButton from './AddToCartButton';
 
 function ProductCard({ product, qty, onChange }) {
   return (
-    <div>
+    <div className="shadow-3xl flex flex-col gap-4 rounded-md bg-white p-5">
       <Link to={`/shop/${product.id}`}>
         <img
           src={product.background_image}
           alt={product.name}
-          width={300}
-          height={200}
+          className="h-64 w-full object-cover"
         />
-        <h3>{product.name}</h3>
       </Link>
-      <p>${getPrice(product.id)}</p>
+      <Link to={`/shop/${product.id}`}>
+        <h3 className="h-16 text-2xl font-bold">{product.name}</h3>
+      </Link>
+      <p className="text-lg text-red-600">${getPrice(product.id)}</p>
       <AddToCartButton qty={qty} onChange={onChange} />
     </div>
   );

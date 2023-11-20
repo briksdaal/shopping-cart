@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { expect } from 'vitest';
@@ -17,7 +17,7 @@ it('Render homepage on visit', async () => {
 
   expect(
     screen.getByRole('heading', {
-      name: 'This is the homepage of the Retro Potato shop'
+      name: 'Get excellent condition physical copies of your favorite SNES games'
     })
   ).toBeInTheDocument();
 });
@@ -76,12 +76,15 @@ it('Navigates to about page on click', async () => {
   renderMemoryRouter();
   const user = userEvent.setup();
 
-  const aboutLink = screen.getByRole('link', { name: 'About Us' });
+  const header = screen.getByRole('navigation');
+  const aboutLink = within(header).getByRole('link', { name: 'About Us' });
 
   await user.click(aboutLink);
 
+  const main = screen.getByRole('main');
+
   expect(
-    screen.getByRole('heading', {
+    within(main).getByRole('heading', {
       name: 'About Us'
     })
   ).toBeInTheDocument();

@@ -33,7 +33,7 @@ function App() {
   return (
     <>
       <Header numOfItemsInCart={numOfItemsInCart} />
-      <main>
+      <main className="flex grow justify-center">
         <Outlet context={{ cartItems, updateCartItemQty }} />
       </main>
       <Footer />

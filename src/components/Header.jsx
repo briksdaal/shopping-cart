@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { IoCartOutline } from 'react-icons/io5';
 
 function LinkContainer({ children }) {
@@ -7,15 +7,15 @@ function LinkContainer({ children }) {
 }
 
 LinkContainer.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.elementType
 };
 
 function Header({ numOfItemsInCart }) {
   return (
-    <header className="flex justify-center">
-      <div className="m-4 flex w-full max-w-[1280px] justify-between gap-16">
+    <header className="sticky top-0 z-10 flex justify-center bg-white shadow-lg">
+      <div className="m-4 flex w-full max-w-screen-xl justify-between gap-16">
         <h1>
-          <Link to="/">
+          <NavLink to="/">
             <div className="flex items-center gap-4">
               <img
                 className="w-20"
@@ -28,24 +28,24 @@ function Header({ numOfItemsInCart }) {
                 alt="Retro Potato Logo"
               />
             </div>
-          </Link>
+          </NavLink>
         </h1>
         <nav className="grow">
           <div className="flex h-full items-center justify-between text-xl">
             <div className="flex gap-16">
-              <Link to="/">Home</Link>
-              <Link to="/shop">Shop</Link>
-              <Link to="/about">About Us</Link>
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/shop">Shop</NavLink>
+              <NavLink to="/about">About Us</NavLink>
             </div>
             <div>
-              <Link to="/cart" className="relative">
-                <IoCartOutline data-testid="cart" className="text-2xl" />
+              <NavLink to="/cart" className="relative">
+                <IoCartOutline data-testid="cart" className="text-3xl" />
                 {numOfItemsInCart !== 0 && (
-                  <div className="absolute right-0 top-0 flex h-5 w-5 translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                  <div className="absolute right-0 top-0 flex translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
                     {numOfItemsInCart}
                   </div>
                 )}
-              </Link>
+              </NavLink>
             </div>
           </div>
         </nav>

@@ -5,7 +5,7 @@ import FetchComponent from './FetchComponent';
 function ShopPage() {
   const globalCart = useOutletContext();
   return (
-    <div>
+    <div className="w-full max-w-screen-xl">
       <h2>Our Games</h2>
       <FetchComponent child={Products} globalCart={globalCart} />
     </div>

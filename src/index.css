@@ -4,6 +4,10 @@
 
 @layer base {
   body {
-    @apply overflow-y-scroll;
+    @apply text-darkblue overflow-y-scroll;
+  }
+
+  #root {
+    @apply flex min-h-screen flex-col;
   }
 }

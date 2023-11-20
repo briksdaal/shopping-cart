@@ -46,6 +46,8 @@ it('Renders add to cart button', () => {
 
 it('Renders a link to the correct page', () => {
   renderCard();
-
-  expect(screen.getByRole('link')).toHaveAttribute('href', `/shop/${game.id}`);
+  const links = screen.getAllByRole('link');
+  links.forEach((link) => {
+    expect(link).toHaveAttribute('href', `/shop/${game.id}`);
+  });
 });

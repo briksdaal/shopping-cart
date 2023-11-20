@@ -1,11 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { expect } from 'vitest';
+import { BrowserRouter } from 'react-router-dom';
 import Home from '../components/Home';
 
+const renderHome = () => {
+  render(<Home />, {
+    wrapper: ({ children }) => {
+      return <BrowserRouter>{children}</BrowserRouter>;
+    }
+  });
+};
 it('Renders content', () => {
-  render(<Home />);
+  renderHome();
 
   expect(
-    screen.getByText('This is the homepage of the Retro Potato shop')
+    screen.getByText(
+      'Get excellent condition physical copies of your favorite SNES games'
+    )
   ).toBeInTheDocument();
 });
