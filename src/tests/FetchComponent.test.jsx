@@ -41,7 +41,7 @@ afterAll(() => server.close());
 it('Renders loading at first', async () => {
   render(<FetchComponent id={5} child={MockChild} />);
 
-  expect(screen.getByText('Is Loading')).toBeInTheDocument();
+  expect(screen.getByTestId('loading')).toBeInTheDocument();
   expect(screen.queryByText('Some data')).not.toBeInTheDocument();
   expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
 });
@@ -53,7 +53,7 @@ it('Sends request to all games api url if no id is provided', async () => {
 
   expect(screen.getByText('All games data')).toBeInTheDocument();
   expect(screen.queryByText('Game #5 data')).not.toBeInTheDocument();
-  expect(screen.queryByText('Is Loading')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
   expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
 });
 
@@ -64,7 +64,7 @@ it('Sends request to specific game api url if id is provided', async () => {
 
   expect(screen.getByText('Game #5 data')).toBeInTheDocument();
   expect(screen.queryByText('All games data')).not.toBeInTheDocument();
-  expect(screen.queryByText('Is Loading')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
   expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
 });
 
@@ -80,5 +80,5 @@ it('Handles errors', async () => {
 
   expect(screen.getByText('Error: 401')).toBeInTheDocument();
   expect(screen.queryByText('Some data')).not.toBeInTheDocument();
-  expect(screen.queryByText('Is Loading')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
 });
