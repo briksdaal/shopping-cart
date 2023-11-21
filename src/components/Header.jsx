@@ -2,12 +2,38 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { IoCartOutline } from 'react-icons/io5';
 
-function LinkContainer({ children }) {
-  return <div>{children}</div>;
+function StyledNavLink({ to, children }) {
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        isActive
+          ? 'underline decoration-blue-700 decoration-4 underline-offset-12'
+          : 'decoration-blue-700 decoration-4 underline-offset-12 hover:underline'
+      }>
+      {children}
+    </NavLink>
+  );
 }
 
-LinkContainer.propTypes = {
-  children: PropTypes.elementType
+// function StyledNavLink({ to, children }) {
+//   return (
+//     <NavLink
+//       to={to}
+//       className={({ isActive }) =>
+//         isActive
+//           ? 'relative [&>div]:opacity-100'
+//           : 'relative [&>div]:hover:opacity-100'
+//       }>
+//       {children}
+//       <div className="absolute h-1 w-full bg-blue-700 opacity-0 transition-opacity duration-200"></div>
+//     </NavLink>
+//   );
+// }
+
+StyledNavLink.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.string
 };
 
 function Header({ numOfItemsInCart }) {
@@ -33,9 +59,9 @@ function Header({ numOfItemsInCart }) {
         <nav className="grow">
           <div className="flex h-full items-center justify-between text-xl">
             <div className="flex gap-16">
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/shop">Shop</NavLink>
-              <NavLink to="/about">About Us</NavLink>
+              <StyledNavLink to="/">Home</StyledNavLink>
+              <StyledNavLink to="/shop">Shop</StyledNavLink>
+              <StyledNavLink to="/about">About Us</StyledNavLink>
             </div>
             <div>
               <NavLink to="/cart" className="relative">

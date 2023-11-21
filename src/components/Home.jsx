@@ -1,13 +1,14 @@
 import { useOutletContext, Link } from 'react-router-dom';
 import Products from './Products';
 import FetchComponent from './FetchComponent';
+import Title from './Title';
 import PropTypes from 'prop-types';
 import { CgGames, CgCreditCard } from 'react-icons/cg';
 import { TbTruckDelivery } from 'react-icons/tb';
 
 function SellingPointCard({ title, subtitle, icon }) {
   return (
-    <div className="shadow-3xl flex w-full items-center gap-4 rounded-md bg-white px-8 py-12">
+    <div className="flex w-full items-center gap-4 rounded-md bg-white px-8 py-12 shadow-3xl">
       <div className="text-5xl text-neutral-400">{icon}</div>
       <div>
         <h3 className="font-bold">{title}</h3>
@@ -68,10 +69,7 @@ function Home() {
       </div>
       <div className="mt-24 flex w-full justify-center bg-sky-50 pb-24 pt-16">
         <div className="max-w-screen-xl">
-          <h2 className="mb-16 flex flex-col items-center text-center text-4xl">
-            Our Top Games
-            <div className="mt-4 h-1 w-36 bg-blue-700"></div>
-          </h2>
+          <Title>Our Top Games</Title>
           <FetchComponent
             child={Products}
             globalCart={globalCart}

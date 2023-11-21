@@ -9,52 +9,56 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-it('Renders add to cart button when quantity is 0', () => {
-  render(<AddToCartButton qty={0} onChange={onChange} />);
-  const addToCart = screen.getByRole('button', { name: 'Add to Cart' });
+describe('Render tests', () => {
+  it('Renders add to cart button when quantity is 0', () => {
+    render(<AddToCartButton qty={0} onChange={onChange} />);
+    const addToCart = screen.getByRole('button', { name: 'Add to Cart' });
 
-  expect(addToCart).toBeInTheDocument();
+    expect(addToCart).toBeInTheDocument();
+  });
+
+  it('Renders quantity and two buttons (increment and decrement) when quantity is > 0', () => {
+    render(<AddToCartButton qty={3} onChange={onChange} />);
+
+    expect(screen.getByText('3', { exact: false })).toBeInTheDocument();
+    expect(screen.getAllByRole('button')).toHaveLength(2);
+    expect(
+      screen.queryByRole('button', { name: 'Add to Cart' })
+    ).not.toBeInTheDocument();
+  });
 });
 
-it('Renders quantity and two buttons (increment and decrement) when quantity is > 0', () => {
-  render(<AddToCartButton qty={3} onChange={onChange} />);
+describe('Quantity update tests', () => {
+  it('Clicking on add to cart (qty is 0) calls onChange with 1', async () => {
+    const user = userEvent.setup();
+    render(<AddToCartButton qty={0} onChange={onChange} />);
+    const addToCart = screen.getByRole('button', { name: 'Add to Cart' });
 
-  expect(screen.getByText('3', { exact: false })).toBeInTheDocument();
-  expect(screen.getAllByRole('button')).toHaveLength(2);
-  expect(
-    screen.queryByRole('button', { name: 'Add to Cart' })
-  ).not.toBeInTheDocument();
-});
+    await user.click(addToCart);
 
-it('Clicking on add to cart (qty is 0) calls onChange with 1', async () => {
-  const user = userEvent.setup();
-  render(<AddToCartButton qty={0} onChange={onChange} />);
-  const addToCart = screen.getByRole('button', { name: 'Add to Cart' });
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange).toHaveBeenCalledWith(1);
+  });
 
-  await user.click(addToCart);
+  it('Clicking on increment calls onChange with qty + 1', async () => {
+    const user = userEvent.setup();
+    render(<AddToCartButton qty={4} onChange={onChange} />);
+    const incrementBtn = screen.getByRole('button', { name: '+' });
 
-  expect(onChange).toHaveBeenCalledOnce();
-  expect(onChange).toHaveBeenCalledWith(1);
-});
+    await user.click(incrementBtn);
 
-it('Clicking on increment calls onChange with qty + 1', async () => {
-  const user = userEvent.setup();
-  render(<AddToCartButton qty={4} onChange={onChange} />);
-  const incrementBtn = screen.getByRole('button', { name: '+' });
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange).toHaveBeenCalledWith(5);
+  });
 
-  await user.click(incrementBtn);
+  it('Clicking on decrement calls onChange with qty - 1', async () => {
+    const user = userEvent.setup();
+    render(<AddToCartButton qty={8} onChange={onChange} />);
+    const decrementBtn = screen.getByRole('button', { name: '-' });
 
-  expect(onChange).toHaveBeenCalledOnce();
-  expect(onChange).toHaveBeenCalledWith(5);
-});
+    await user.click(decrementBtn);
 
-it('Clicking on decrement calls onChange with qty - 1', async () => {
-  const user = userEvent.setup();
-  render(<AddToCartButton qty={8} onChange={onChange} />);
-  const decrementBtn = screen.getByRole('button', { name: '-' });
-
-  await user.click(decrementBtn);
-
-  expect(onChange).toHaveBeenCalledOnce();
-  expect(onChange).toHaveBeenCalledWith(7);
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange).toHaveBeenCalledWith(7);
+  });
 });

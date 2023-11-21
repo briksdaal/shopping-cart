@@ -30,7 +30,7 @@ it('Renders products when array is bigger than 0', () => {
 
   expect(screen.getAllByRole('heading')).toHaveLength(3);
   expect(
-    screen.queryByRole('heading', { name: 'Sorry, this seems to be empty' })
+    screen.queryByRole('heading', { name: 'This seems to be empty...' })
   ).not.toBeInTheDocument();
 });
 
@@ -38,7 +38,7 @@ it('Renders empty message when array is empty', () => {
   render(<Products data={{ results: [] }} globalCart={globalCart} />);
 
   expect(
-    screen.getByRole('heading', { name: 'Sorry, this seems to be empty' })
+    screen.getByRole('heading', { name: 'This seems to be empty...' })
   ).toBeInTheDocument();
   expect(screen.getAllByRole('heading')).toHaveLength(1);
 });
@@ -47,7 +47,7 @@ it('Renders empty message when no products prop provided', () => {
   render(<Products globalCart={globalCart} />);
 
   expect(
-    screen.getByRole('heading', { name: 'Sorry, this seems to be empty' })
+    screen.getByRole('heading', { name: 'This seems to be empty...' })
   ).toBeInTheDocument();
   expect(screen.queryAllByRole('heading')).toHaveLength(1);
 });

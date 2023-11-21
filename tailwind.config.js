@@ -8,6 +8,9 @@ export default {
       },
       boxShadow: {
         '3xl': '0 5px 15px 1px rgba(0, 0, 0, 0.3)'
+      },
+      textUnderlineOffset: {
+        12: '12px'
       }
     }
   },

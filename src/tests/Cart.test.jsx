@@ -21,7 +21,7 @@ const mockFullCart = {
       qty: 2
     }
   ],
-  updateCartItemQty: vi.fn()
+  updateCartItemQty: vi.fn(() => () => null)
 };
 
 const mockEmptyCart = {
@@ -61,7 +61,7 @@ it("Doesn't render checkout if cart is empty, instead renders empty message", ()
     screen.queryByRole('link', { name: 'Proceed to Checkout' })
   ).not.toBeInTheDocument();
 
-  expect(screen.getByText('Sorry, this seems to be empty')).toBeInTheDocument();
+  expect(screen.getByText('This seems to be empty...')).toBeInTheDocument();
 });
 
 it("Renders checkout link and sum if cart isn't empty", () => {

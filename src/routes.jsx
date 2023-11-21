@@ -6,11 +6,17 @@ import About from './components/About';
 import Cart from './components/Cart';
 import ErrorPage from './components/ErrorPage';
 import Checkout from './components/Checkout';
+import ScrollToTop from './components/ScrollToTop';
 
 const routes = [
   {
     path: '/',
-    element: <App />,
+    element: (
+      <>
+        <ScrollToTop />
+        <App />
+      </>
+    ),
     children: [
       {
         index: true,

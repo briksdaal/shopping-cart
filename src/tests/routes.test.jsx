@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import routes from '../routes';
 
 function renderMemoryRouter(path = '/') {
@@ -11,6 +11,8 @@ function renderMemoryRouter(path = '/') {
     />
   );
 }
+
+vi.stubGlobal('scrollTo', vi.fn());
 
 it('Render homepage on visit', async () => {
   renderMemoryRouter();

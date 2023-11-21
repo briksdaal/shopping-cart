@@ -1,7 +1,21 @@
+import PropTypes from 'prop-types';
 import iconWhite from '../../assets/retro_potato_icon_white.png';
 import logoWhite from '../../assets/retro_potato_logo_white.png';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+function FooterLink({ href, children }) {
+  return (
+    <a className="text-3xl" href={href} target="_blank" rel="noreferrer">
+      {children}
+    </a>
+  );
+}
+
+FooterLink.propTypes = {
+  href: PropTypes.string,
+  children: PropTypes.element
+};
 
 export default function Footer() {
   return (
@@ -36,15 +50,14 @@ export default function Footer() {
         </div>
         <div className="mr-16 flex-1">
           <h3 className="mb-5 mt-7 text-2xl">Contact Us</h3>
-          <p className="text-3xl">
-            <a
-              className="footer-link"
-              href="https://github.com/briksdaal"
-              target="_blank"
-              rel="noreferrer">
+          <div className="flex gap-4">
+            <FooterLink>
               <FaGithub />
-            </a>
-          </p>
+            </FooterLink>
+            <FooterLink>
+              <FaLinkedin />
+            </FooterLink>
+          </div>
         </div>
       </div>
     </footer>
