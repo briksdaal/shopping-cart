@@ -48,13 +48,13 @@ function Home() {
   return (
     <div className="flex w-full flex-col items-center">
       <div className="relative flex w-full justify-center overflow-hidden bg-blue-50 py-32">
-        <div className="absolute bottom-0 left-[-40px] h-[90%] w-[30%] bg-[url('/assets/link.png')] bg-contain bg-left bg-no-repeat"></div>
-        <div className="absolute bottom-0 right-[-40px] h-[70%] w-[30%] bg-[url('/assets/mario.png')] bg-contain bg-right bg-no-repeat"></div>
+        <div className="absolute bottom-0 left-[-40px] h-[90%] w-[30%] bg-[url('/assets/link.png')] bg-contain bg-left-bottom bg-no-repeat"></div>
+        <div className="absolute bottom-0 right-[-40px] h-[70%] w-[30%] bg-[url('/assets/mario.png')] bg-contain bg-right-bottom bg-no-repeat"></div>
         <h2 className="max-w-screen-md text-center text-4xl font-bold leading-loose">
           Get excellent condition physical copies of your favorite SNES games
         </h2>
       </div>
-      <div className="mt-24 flex w-full max-w-screen-xl gap-40">
+      <div className="mt-24 flex w-full max-w-screen-xl flex-col gap-12 md:flex-row md:gap-32">
         {sellingPointCardContent.map((content) => (
           <SellingPointCard key={content.title} {...content} />
         ))}
