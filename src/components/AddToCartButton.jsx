@@ -10,7 +10,7 @@ function AddToCartButton({ qty = 0, onChange, cartView }) {
   }
 
   return (
-    <div className="add-to-cart-container">
+    <div className="h-12">
       {qty > 0 ? (
         <>
           <button
