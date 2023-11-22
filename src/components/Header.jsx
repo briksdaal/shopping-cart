@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { IoCartOutline, IoMenuOutline } from 'react-icons/io5';
 import { IoMdClose } from 'react-icons/io';
+import retroPotatoIcon from '../../assets/retro_potato_icon.png';
+import retroPotatoLogo from '../../assets/retro_potato_logo.png';
 
 function StyledNavLink({ to, onClick, children }) {
   return (
@@ -53,12 +55,12 @@ function Header({ numOfItemsInCart }) {
             <div className="flex flex-col items-center md:flex-row md:gap-4">
               <img
                 className="w-12 md:w-20"
-                src="./assets/retro_potato_icon.png"
+                src={retroPotatoIcon}
                 alt="Retro Potato"
               />
               <img
                 className="w-32 md:w-56"
-                src="./assets/retro_potato_logo.png"
+                src={retroPotatoLogo}
                 alt="Retro Potato Logo"
               />
             </div>

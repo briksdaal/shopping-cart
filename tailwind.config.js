@@ -11,6 +11,10 @@ export default {
       },
       textUnderlineOffset: {
         12: '12px'
+      },
+      backgroundImage: {
+        link: "url('/assets/link.png')",
+        mario: "url('/assets/mario.png')"
       }
     }
   },
