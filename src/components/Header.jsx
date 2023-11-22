@@ -6,15 +6,19 @@ import { IoMdClose } from 'react-icons/io';
 import retroPotatoIcon from '../../assets/retro_potato_icon.png';
 import retroPotatoLogo from '../../assets/retro_potato_logo.png';
 
-function StyledNavLink({ to, onClick, children }) {
+function StyledNavLink({ to, onClick, isMobileMenuOpen, children }) {
   return (
     <NavLink
       to={to}
       onClick={onClick}
       className={({ isActive }) =>
         isActive
-          ? 'no-underline decoration-blue-700 decoration-4 underline-offset-12 md:underline'
-          : 'decoration-blue-700 decoration-4 underline-offset-12 md:hover:underline'
+          ? `${
+              isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+            } no-underline decoration-blue-700 decoration-4 underline-offset-12 transition-opacity duration-1000 md:underline md:opacity-100`
+          : `${
+              isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+            } decoration-blue-700 decoration-4 underline-offset-12 transition-opacity duration-1000 md:opacity-100 md:hover:underline`
       }>
       {children}
     </NavLink>
@@ -24,6 +28,7 @@ function StyledNavLink({ to, onClick, children }) {
 StyledNavLink.propTypes = {
   to: PropTypes.string,
   onClick: PropTypes.func,
+  isMobileMenuOpen: PropTypes.bool,
   children: PropTypes.string
 };
 
@@ -40,7 +45,12 @@ function Header({ numOfItemsInCart }) {
     else body.classList.remove('overflow-y-hidden');
   }, [isMobileMenuOpen]);
 
-  console.log(isMobileMenuOpen);
+  const navLinks = [
+    { title: 'Home', to: '/' },
+    { title: 'Shop', to: '/shop' },
+    { title: 'About Us', to: '/about' }
+  ];
+
   return (
     <header className="sticky top-0 z-10 flex justify-center">
       <div className="absolute z-10 h-full w-full bg-white shadow-lg"></div>
@@ -71,16 +81,16 @@ function Header({ numOfItemsInCart }) {
             <div
               className={`absolute left-0 ${
                 isMobileMenuOpen ? 'top-0' : 'top-[-1000px]'
-              } flex h-screen w-full flex-col gap-4 bg-white p-4 pt-32 text-center transition-all md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-8 md:p-0 md:text-left lg:gap-16`}>
-              <StyledNavLink to="/" onClick={closeMobileMenu}>
-                Home
-              </StyledNavLink>
-              <StyledNavLink to="/shop" onClick={closeMobileMenu}>
-                Shop
-              </StyledNavLink>
-              <StyledNavLink to="/about" onClick={closeMobileMenu}>
-                About Us
-              </StyledNavLink>
+              } flex h-screen w-full flex-col gap-4 bg-white p-4 pt-32 text-center transition-all duration-500 md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-8 md:p-0 md:text-left lg:gap-16`}>
+              {navLinks.map((navLink) => (
+                <StyledNavLink
+                  key={navLink.title}
+                  to={navLink.to}
+                  onClick={closeMobileMenu}
+                  isMobileMenuOpen={isMobileMenuOpen}>
+                  {navLink.title}
+                </StyledNavLink>
+              ))}
             </div>
             <div className="z-20">
               <NavLink
