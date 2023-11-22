@@ -12,9 +12,9 @@ function Cart() {
 
   return (
     <div className="flex w-full justify-center bg-sky-50">
-      <div className="my-16 w-full max-w-screen-xl">
+      <div className="m-4 my-12 w-full max-w-screen-xl md:my-16">
         <Title>Your Cart</Title>
-        <div className="flex gap-16">
+        <div className="flex flex-col gap-16 lg:flex-row">
           <Products
             data={{ results: globalCart.cartItems }}
             globalCart={globalCart}

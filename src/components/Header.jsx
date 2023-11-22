@@ -31,10 +31,16 @@ function Header({ numOfItemsInCart }) {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const body = document.querySelector('body');
+    if (isMobileMenuOpen) body.classList.add('overflow-y-hidden');
+    else body.classList.remove('overflow-y-hidden');
+  }, [isMobileMenuOpen]);
+
   return (
     <header className="sticky top-0 z-10 flex justify-center">
       <div className="absolute z-10 h-full w-full bg-white shadow-lg"></div>
-      <div className="m-4 mt-1 flex w-full max-w-screen-xl justify-between gap-16 md:mt-4">
+      <div className="mx-6 my-4 mt-1 flex w-full max-w-screen-xl justify-between gap-16 md:mt-4">
         <button
           className="z-20 mt-4 text-3xl md:hidden"
           onClick={() => setIsMobileMenuOpen((current) => !current)}>
@@ -61,7 +67,7 @@ function Header({ numOfItemsInCart }) {
             <div
               className={`absolute left-0 ${
                 isMobileMenuOpen ? 'top-0' : 'top-[-1000px]'
-              } flex h-screen w-full flex-col gap-4 bg-white p-4 pt-32 text-center transition-all md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-16 md:p-0 md:text-left`}>
+              } flex h-screen w-full flex-col gap-4 bg-white p-4 pt-32 text-center transition-all md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-8 md:p-0 md:text-left lg:gap-16`}>
               <StyledNavLink to="/">Home</StyledNavLink>
               <StyledNavLink to="/shop">Shop</StyledNavLink>
               <StyledNavLink to="/about">About Us</StyledNavLink>

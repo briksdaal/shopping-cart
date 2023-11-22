@@ -19,13 +19,17 @@ FooterLink.propTypes = {
 
 export default function Footer() {
   return (
-    <footer className="flex justify-center bg-darkblue py-16">
-      <div className="m-4 flex w-full max-w-screen-xl text-white">
+    <footer className="flex justify-center bg-darkblue py-8 md:py-16">
+      <div className="m-4 flex w-full max-w-screen-xl flex-col text-white md:flex-row">
         <div className="mr-16 flex-[2_2_0%]">
           <Link to="/">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col items-start sm:flex-row sm:items-center sm:gap-4">
               <img className="w-20" src={iconWhite} alt="Retro Potato" />
-              <img className="w-56" src={logoWhite} alt="Retro Potato Logo" />
+              <img
+                className="mb-8 w-56 sm:mb-0"
+                src={logoWhite}
+                alt="Retro Potato Logo"
+              />
             </div>
           </Link>
           <p className="text-neutral-400">

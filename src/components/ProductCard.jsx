@@ -9,8 +9,8 @@ function ProductCard({ product, qty, onChange, cartView }) {
     <div
       className={
         !cartView
-          ? 'flex flex-col gap-4 rounded-md bg-white p-5 shadow-3xl'
-          : 'relative grid grid-cols-[auto_1fr] gap-4 rounded-md bg-white p-3 shadow-3xl'
+          ? 'flex max-w-[490px] flex-col gap-4 rounded-md bg-white p-3 shadow-3xl md:p-5'
+          : 'relative flex flex-col gap-4 rounded-md bg-white p-3 shadow-3xl md:grid md:grid-cols-[auto_1fr]'
       }>
       {cartView && qty && (
         <button
@@ -25,14 +25,16 @@ function ProductCard({ product, qty, onChange, cartView }) {
           src={product.background_image}
           alt={product.name}
           className={
-            !cartView ? 'h-64 w-full object-cover' : 'h-16 w-32 object-cover'
+            !cartView
+              ? 'h-32 w-full object-cover sm:h-64'
+              : 'h-16 w-32 object-cover'
           }
         />
       </Link>
       <Link to={`/shop/${product.id}`}>
         <h3
           className={
-            !cartView ? 'h-16 text-2xl font-bold' : 'mr-6 text-xl font-bold'
+            !cartView ? 'text-2xl font-bold md:h-16' : 'mr-6 text-xl font-bold'
           }>
           {product.name}
         </h3>
@@ -41,7 +43,7 @@ function ProductCard({ product, qty, onChange, cartView }) {
         className={
           !cartView
             ? 'text-lg text-red-600'
-            : 'self-center text-lg text-red-600'
+            : 'text-lg text-red-600 md:self-center'
         }>
         ${getPrice(product.id)}
       </p>

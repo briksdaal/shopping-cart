@@ -11,7 +11,9 @@ function Products({ data, globalCart, numOfProductsToShow, cartView }) {
   return (
     <div
       className={
-        !cartView ? 'grid grid-cols-3 gap-16' : 'flex flex-1 flex-col gap-8'
+        !cartView
+          ? 'flex flex-col gap-8 lg:grid lg:grid-cols-3 lg:gap-8'
+          : 'flex flex-1 flex-col gap-8'
       }>
       {products.map((p) => {
         const qty = globalCart.cartItems.find((item) => item.id === p.id)?.qty;

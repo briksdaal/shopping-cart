@@ -8,11 +8,13 @@ import { TbTruckDelivery } from 'react-icons/tb';
 
 function SellingPointCard({ title, subtitle, icon }) {
   return (
-    <div className="flex w-full items-center gap-4 rounded-md bg-white px-8 py-12 shadow-3xl">
+    <div className="flex w-full flex-col items-center gap-4 rounded-md bg-white px-4 py-4 shadow-3xl lg:flex-row lg:px-8 lg:py-12">
       <div className="text-5xl text-neutral-400">{icon}</div>
       <div>
-        <h3 className="font-bold">{title}</h3>
-        <h4 className="text-neutral-500">{subtitle}</h4>
+        <h3 className="text-center font-bold lg:text-left">{title}</h3>
+        <h4 className="text-center text-neutral-500 lg:text-left">
+          {subtitle}
+        </h4>
       </div>
     </div>
   );
@@ -47,19 +49,19 @@ function Home() {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="relative flex w-full justify-center overflow-hidden bg-blue-50 py-32">
-        <div className="absolute bottom-0 left-[-40px] h-[90%] w-[30%] bg-[url('/assets/link.png')] bg-contain bg-left-bottom bg-no-repeat"></div>
-        <div className="absolute bottom-0 right-[-40px] h-[70%] w-[30%] bg-[url('/assets/mario.png')] bg-contain bg-right-bottom bg-no-repeat"></div>
-        <h2 className="max-w-screen-md text-center text-4xl font-bold leading-loose">
+      <div className="relative flex w-full justify-center overflow-hidden bg-blue-50 pb-48 pt-16 lg:pb-32 lg:pt-32">
+        <div className="absolute bottom-0 left-[-40px] h-[60%] w-[50%] bg-[url('/assets/link.png')] bg-contain bg-left-bottom bg-no-repeat sm:h-[90%] sm:w-[30%]"></div>
+        <div className="absolute bottom-0 right-[-40px] h-[50%] w-[50%] bg-[url('/assets/mario.png')] bg-contain bg-right-bottom bg-no-repeat sm:h-[70%] sm:w-[30%]"></div>
+        <h2 className="max-w-screen-md px-8 text-center text-2xl font-bold leading-snug lg:px-16 lg:text-4xl lg:leading-loose">
           Get excellent condition physical copies of your favorite SNES games
         </h2>
       </div>
-      <div className="mt-24 flex w-full max-w-screen-xl flex-col gap-12 md:flex-row md:gap-32">
+      <div className="mt-12 flex w-full max-w-screen-xl flex-col gap-12 px-6 md:mt-24 md:flex-row lg:gap-32">
         {sellingPointCardContent.map((content) => (
           <SellingPointCard key={content.title} {...content} />
         ))}
       </div>
-      <div className="mt-24 w-full max-w-screen-xl text-center text-2xl leading-loose">
+      <div className="mt-12 w-full max-w-screen-xl px-6 text-center text-lg leading-snug md:mt-24 lg:text-2xl lg:leading-loose">
         Step into the world of Retro Potato, your go-to destination for all
         things SNES nostalgia. With a meticulously curated collection,
         lightning-fast delivery, and a commitment to seamless retro joy, we
@@ -67,15 +69,15 @@ function Home() {
         classics effortlessly, because at Retro Potato, the magic of retro
         gaming is just a click away.
       </div>
-      <div className="mt-24 flex w-full justify-center bg-sky-50 pb-24 pt-16">
-        <div className="max-w-screen-xl">
+      <div className="mt-12 flex w-full justify-center bg-sky-50 pb-12 pt-16 md:mt-24 md:pb-24">
+        <div className="max-w-screen-xl px-6">
           <Title>Our Top Games</Title>
           <FetchComponent
             child={Products}
             globalCart={globalCart}
             numOfProductsToShow={3}
           />
-          <div className="mt-16 flex justify-center">
+          <div className="mt-12 flex justify-center md:mt-16">
             <Link
               to="/shop"
               className="rounded-md bg-blue-700 px-6 py-2 text-lg text-white hover:bg-blue-400">
