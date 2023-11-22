@@ -10,7 +10,7 @@ function ProductCard({ product, qty, onChange, cartView }) {
       className={
         !cartView
           ? 'flex max-w-[490px] flex-col gap-4 rounded-md bg-white p-3 shadow-3xl md:p-5'
-          : 'relative flex flex-col gap-4 rounded-md bg-white p-3 shadow-3xl md:grid md:grid-cols-[auto_1fr]'
+          : 'relative grid grid-cols-[auto_1fr] gap-4 rounded-md bg-white p-3 shadow-3xl'
       }>
       {cartView && qty && (
         <button
@@ -43,11 +43,11 @@ function ProductCard({ product, qty, onChange, cartView }) {
         className={
           !cartView
             ? 'text-lg text-red-600'
-            : 'text-lg text-red-600 md:self-center'
+            : 'self-center text-lg text-red-600'
         }>
         ${getPrice(product.id)}
       </p>
-      <div>
+      <div className="col-span-2 md:col-span-1">
         <AddToCartButton qty={qty} onChange={onChange} cartView={cartView} />
       </div>
     </div>

@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { IoCartOutline, IoMenuOutline } from 'react-icons/io5';
 import { IoMdClose } from 'react-icons/io';
 
-function StyledNavLink({ to, children }) {
+function StyledNavLink({ to, onClick, children }) {
   return (
     <NavLink
       to={to}
+      onClick={onClick}
       className={({ isActive }) =>
         isActive
           ? 'no-underline decoration-blue-700 decoration-4 underline-offset-12 md:underline'
@@ -20,16 +21,16 @@ function StyledNavLink({ to, children }) {
 
 StyledNavLink.propTypes = {
   to: PropTypes.string,
+  onClick: PropTypes.func,
   children: PropTypes.string
 };
 
 function Header({ numOfItemsInCart }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState('false');
-  const { pathname } = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
+  function closeMobileMenu() {
     setIsMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const body = document.querySelector('body');
@@ -37,6 +38,7 @@ function Header({ numOfItemsInCart }) {
     else body.classList.remove('overflow-y-hidden');
   }, [isMobileMenuOpen]);
 
+  console.log(isMobileMenuOpen);
   return (
     <header className="sticky top-0 z-10 flex justify-center">
       <div className="absolute z-10 h-full w-full bg-white shadow-lg"></div>
@@ -47,7 +49,7 @@ function Header({ numOfItemsInCart }) {
           {isMobileMenuOpen ? <IoMdClose /> : <IoMenuOutline />}
         </button>
         <h1 className="z-20">
-          <NavLink to="/">
+          <NavLink to="/" onClick={closeMobileMenu}>
             <div className="flex flex-col items-center md:flex-row md:gap-4">
               <img
                 className="w-12 md:w-20"
@@ -68,12 +70,21 @@ function Header({ numOfItemsInCart }) {
               className={`absolute left-0 ${
                 isMobileMenuOpen ? 'top-0' : 'top-[-1000px]'
               } flex h-screen w-full flex-col gap-4 bg-white p-4 pt-32 text-center transition-all md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-8 md:p-0 md:text-left lg:gap-16`}>
-              <StyledNavLink to="/">Home</StyledNavLink>
-              <StyledNavLink to="/shop">Shop</StyledNavLink>
-              <StyledNavLink to="/about">About Us</StyledNavLink>
+              <StyledNavLink to="/" onClick={closeMobileMenu}>
+                Home
+              </StyledNavLink>
+              <StyledNavLink to="/shop" onClick={closeMobileMenu}>
+                Shop
+              </StyledNavLink>
+              <StyledNavLink to="/about" onClick={closeMobileMenu}>
+                About Us
+              </StyledNavLink>
             </div>
             <div className="z-20">
-              <NavLink to="/cart" className="relative">
+              <NavLink
+                to="/cart"
+                className="relative"
+                onClick={closeMobileMenu}>
                 <IoCartOutline
                   data-testid="cart"
                   className="mt-4 text-3xl md:mt-auto"

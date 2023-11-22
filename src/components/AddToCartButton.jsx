@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-function AddToCartButton({ qty = 0, onChange, cartView }) {
+function AddToCartButton({ qty = 0, onChange }) {
   function onIncrement() {
     onChange(qty + 1);
   }
@@ -14,9 +14,7 @@ function AddToCartButton({ qty = 0, onChange, cartView }) {
       {qty > 0 ? (
         <>
           <button
-            className={`${
-              cartView ? 'ml-0' : ''
-            } mx-1 my-1 ml-0 inline-flex w-9 justify-center rounded-3xl bg-blue-700 px-5 py-1 text-2xl text-white hover:bg-blue-400 md:mx-3 lg:ml-3`}
+            className="my-1 ml-0 mr-1 inline-flex w-9 justify-center rounded-3xl bg-blue-700 px-5 py-1 text-2xl text-white hover:bg-blue-400 md:mr-3"
             onClick={onDecrement}>
             -
           </button>
@@ -40,8 +38,7 @@ function AddToCartButton({ qty = 0, onChange, cartView }) {
 
 AddToCartButton.propTypes = {
   qty: PropTypes.number,
-  onChange: PropTypes.func,
-  cartView: PropTypes.bool
+  onChange: PropTypes.func
 };
 
 export default AddToCartButton;
