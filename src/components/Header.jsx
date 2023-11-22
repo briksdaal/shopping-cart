@@ -6,6 +6,11 @@ import { IoMdClose } from 'react-icons/io';
 import retroPotatoIcon from '../../assets/retro_potato_icon.png';
 import retroPotatoLogo from '../../assets/retro_potato_logo.png';
 
+function preventScroll(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
 function StyledNavLink({ to, onClick, isMobileMenuOpen, children }) {
   return (
     <NavLink
@@ -40,9 +45,22 @@ function Header({ numOfItemsInCart }) {
   }
 
   useEffect(() => {
+    const html = document.querySelector('html');
     const body = document.querySelector('body');
-    if (isMobileMenuOpen) body.classList.add('overflow-y-hidden');
-    else body.classList.remove('overflow-y-hidden');
+
+    if (isMobileMenuOpen) {
+      html.classList.add('overflow-y-hidden');
+      body.classList.add('overflow-y-hidden');
+      body.classList.add('relative');
+      window.addEventListener('touchmove', preventScroll, { passive: false });
+    } else {
+      html.classList.remove('overflow-y-hidden');
+      body.classList.remove('overflow-y-hidden');
+      body.classList.remove('relative');
+      window.removeEventListener('touchmove', preventScroll, {
+        passive: false
+      });
+    }
   }, [isMobileMenuOpen]);
 
   const navLinks = [
@@ -52,8 +70,8 @@ function Header({ numOfItemsInCart }) {
   ];
 
   return (
-    <header className="sticky top-0 z-10 flex justify-center">
-      <div className="absolute z-10 h-full w-full bg-white shadow-lg"></div>
+    <header className="fixed top-0 z-10 flex w-full justify-center md:static md:h-auto md:shadow-lg">
+      <div className="absolute z-10 h-full w-full bg-white shadow-lg md:hidden"></div>
       <div className="mx-6 my-4 mt-1 flex w-full max-w-screen-xl justify-between gap-16 md:mt-4">
         <button
           className="z-20 mt-4 text-3xl md:hidden"
