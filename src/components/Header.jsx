@@ -110,22 +110,20 @@ function Header({ numOfItemsInCart }) {
                 </StyledNavLink>
               ))}
             </div>
-            <div className="z-20">
-              <NavLink
-                to="/cart"
-                className="relative"
-                onClick={closeMobileMenu}>
-                <IoCartOutline
-                  data-testid="cart"
-                  className="mt-4 text-3xl md:mt-auto"
-                />
-                {numOfItemsInCart !== 0 && (
-                  <div className="absolute right-0 top-4 flex translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white md:top-0">
-                    {numOfItemsInCart}
-                  </div>
-                )}
-              </NavLink>
-            </div>
+            <NavLink
+              to="/cart"
+              className="relative z-20"
+              onClick={closeMobileMenu}>
+              <IoCartOutline
+                data-testid="cart"
+                className="mt-4 text-3xl md:mt-auto"
+              />
+              {numOfItemsInCart !== 0 && (
+                <div className="absolute right-0 top-4 flex translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white md:top-0">
+                  {numOfItemsInCart}
+                </div>
+              )}
+            </NavLink>
           </div>
         </nav>
       </div>
