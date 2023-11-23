@@ -6,11 +6,6 @@ import { IoMdClose } from 'react-icons/io';
 import retroPotatoIcon from '../../assets/retro_potato_icon.png';
 import retroPotatoLogo from '../../assets/retro_potato_logo.png';
 
-function preventScroll(e) {
-  e.preventDefault();
-  e.stopPropagation();
-}
-
 function StyledNavLink({ to, onClick, isMobileMenuOpen, children }) {
   return (
     <NavLink
@@ -38,6 +33,7 @@ StyledNavLink.propTypes = {
 };
 
 function Header({ numOfItemsInCart }) {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   function closeMobileMenu() {
@@ -45,22 +41,33 @@ function Header({ numOfItemsInCart }) {
   }
 
   useEffect(() => {
-    const html = document.querySelector('html');
-    const body = document.querySelector('body');
+    function handleScroll() {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const html = document.body.parentElement;
 
     if (isMobileMenuOpen) {
-      html.classList.add('overflow-y-hidden');
-      body.classList.add('overflow-y-hidden');
-      body.classList.add('relative');
-      window.addEventListener('touchmove', preventScroll, { passive: false });
-    } else {
-      html.classList.remove('overflow-y-hidden');
-      body.classList.remove('overflow-y-hidden');
-      body.classList.remove('relative');
-      window.removeEventListener('touchmove', preventScroll, {
-        passive: false
-      });
+      html.classList.add('overflow-y-hidden', 'touch-none');
     }
+
+    return () => {
+      if (isMobileMenuOpen) {
+        html.classList.remove('overflow-y-hidden', 'touch-none');
+      }
+    };
   }, [isMobileMenuOpen]);
 
   const navLinks = [
@@ -70,11 +77,16 @@ function Header({ numOfItemsInCart }) {
   ];
 
   return (
-    <header className="fixed top-0 z-10 flex w-full justify-center md:sticky md:h-auto md:bg-white md:shadow-lg">
+    <header className="fixed top-0 z-10 flex w-full justify-center md:h-auto md:bg-white md:shadow-lg">
       <div className="absolute z-10 h-full w-full bg-white shadow-lg md:hidden"></div>
-      <div className="mx-6 my-4 mt-1 flex w-full max-w-screen-xl justify-between gap-16 md:mt-4">
+      <div
+        className={`mx-6 ${
+          isScrolled ? 'mb-1' : 'mb-4'
+        } mt-1 flex w-full max-w-screen-xl justify-between gap-16 transition-all duration-200 md:mb-4 md:mt-4`}>
         <button
-          className="z-20 mt-4 text-3xl md:hidden"
+          className={`${
+            isScrolled ? 'mt-0' : 'mt-4'
+          } z-20 text-3xl transition-all duration-200 md:hidden`}
           onClick={() => setIsMobileMenuOpen((current) => !current)}>
           {isMobileMenuOpen ? <IoMdClose /> : <IoMenuOutline />}
         </button>
@@ -87,44 +99,49 @@ function Header({ numOfItemsInCart }) {
                 alt="Retro Potato"
               />
               <img
-                className="w-32 md:w-56"
+                className={`${
+                  isScrolled ? 'hidden' : ''
+                } w-32 md:block md:w-56`}
                 src={retroPotatoLogo}
                 alt="Retro Potato Logo"
               />
             </div>
           </NavLink>
         </h1>
-        <nav className="md:grow">
-          <div className="flex h-full items-center justify-between text-xl">
-            <div
-              className={`absolute left-0 ${
-                isMobileMenuOpen ? 'top-0' : 'top-[-1000px]'
-              } flex h-screen w-full flex-col gap-4 bg-white p-4 pt-32 text-center transition-all duration-500 md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-8 md:p-0 md:text-left lg:gap-16`}>
-              {navLinks.map((navLink) => (
-                <StyledNavLink
-                  key={navLink.title}
-                  to={navLink.to}
-                  onClick={closeMobileMenu}
-                  isMobileMenuOpen={isMobileMenuOpen}>
-                  {navLink.title}
-                </StyledNavLink>
-              ))}
-            </div>
-            <NavLink
-              to="/cart"
-              className="relative z-20"
-              onClick={closeMobileMenu}>
-              <IoCartOutline
-                data-testid="cart"
-                className="mt-4 text-3xl md:mt-auto"
-              />
-              {numOfItemsInCart !== 0 && (
-                <div className="absolute right-0 top-4 flex translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white md:top-0">
-                  {numOfItemsInCart}
-                </div>
-              )}
-            </NavLink>
+        <nav className="flex items-center md:grow">
+          <div
+            className={`absolute left-0 ${
+              isMobileMenuOpen ? 'top-0' : 'top-[-1000px]'
+            } flex h-screen w-full touch-manipulation flex-col items-center gap-4 overscroll-contain bg-white p-4 pt-32 text-center text-xl transition-all duration-500 md:static md:z-20 md:mt-0 md:flex md:h-auto md:flex-row md:gap-8 md:p-0 md:text-left lg:gap-16`}>
+            {navLinks.map((navLink) => (
+              <StyledNavLink
+                key={navLink.title}
+                to={navLink.to}
+                onClick={closeMobileMenu}
+                isMobileMenuOpen={isMobileMenuOpen}>
+                {navLink.title}
+              </StyledNavLink>
+            ))}
           </div>
+          <NavLink
+            to="/cart"
+            className="relative z-20"
+            onClick={closeMobileMenu}>
+            <IoCartOutline
+              data-testid="cart"
+              className={`${
+                isScrolled ? 'mt-0' : 'mt-4'
+              } text-3xl transition-all duration-200 md:mt-auto`}
+            />
+            {numOfItemsInCart !== 0 && (
+              <div
+                className={`absolute ${
+                  isScrolled ? 'top-1' : 'top-4'
+                } right-0 flex translate-x-[50%] translate-y-[-50%] items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white transition-all duration-200 md:top-0`}>
+                {numOfItemsInCart}
+              </div>
+            )}
+          </NavLink>
         </nav>
       </div>
     </header>

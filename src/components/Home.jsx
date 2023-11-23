@@ -51,9 +51,9 @@ function Home() {
     <div className="flex w-full flex-col items-center">
       <div className="relative flex w-full justify-center overflow-hidden bg-blue-50 pb-48 pt-16 lg:pb-32 lg:pt-32">
         <div
-          className={`bg-link absolute bottom-0 left-[-40px] h-[60%] w-[50%] bg-contain bg-left-bottom bg-no-repeat sm:h-[90%] sm:w-[30%]`}></div>
+          className={`absolute bottom-0 left-[-40px] h-[60%] w-[50%] bg-link bg-contain bg-left-bottom bg-no-repeat sm:h-[90%] sm:w-[30%]`}></div>
         <div
-          className={`bg-mario absolute bottom-0 right-[-40px] h-[50%] w-[50%] bg-contain bg-right-bottom bg-no-repeat sm:h-[70%] sm:w-[30%]`}></div>
+          className={`absolute bottom-0 right-[-40px] h-[50%] w-[50%] bg-mario bg-contain bg-right-bottom bg-no-repeat sm:h-[70%] sm:w-[30%]`}></div>
         <h2 className="max-w-screen-md px-8 text-center text-2xl font-bold leading-snug lg:px-16 lg:text-4xl lg:leading-loose">
           Get excellent condition physical copies of your favorite SNES games
         </h2>
