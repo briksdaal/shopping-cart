@@ -70,7 +70,7 @@ function Header({ numOfItemsInCart }) {
   ];
 
   return (
-    <header className="fixed top-0 z-10 flex w-full justify-center md:static md:h-auto md:shadow-lg">
+    <header className="fixed top-0 z-10 flex w-full justify-center md:sticky md:h-auto md:bg-white md:shadow-lg">
       <div className="absolute z-10 h-full w-full bg-white shadow-lg md:hidden"></div>
       <div className="mx-6 my-4 mt-1 flex w-full max-w-screen-xl justify-between gap-16 md:mt-4">
         <button

@@ -31,10 +31,10 @@ function ProductCard({ product, qty, onChange, cartView }) {
           }
         />
       </Link>
-      <Link to={`/shop/${product.id}`}>
+      <Link className={!cartView ? '' : 'mr-6'} to={`/shop/${product.id}`}>
         <h3
           className={
-            !cartView ? 'text-2xl font-bold md:h-16' : 'mr-6 text-xl font-bold'
+            !cartView ? 'text-2xl font-bold md:h-16' : 'text-xl font-bold'
           }>
           {product.name}
         </h3>

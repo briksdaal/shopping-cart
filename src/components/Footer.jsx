@@ -55,10 +55,11 @@ export default function Footer() {
         <div className="mr-16 flex-1">
           <h3 className="mb-5 mt-7 text-2xl">Contact Us</h3>
           <div className="flex gap-4">
-            <FooterLink>
+            <FooterLink href={'https://github.com/briksdaal'}>
               <FaGithub />
             </FooterLink>
-            <FooterLink>
+            <FooterLink
+              href={'https://www.linkedin.com/in/ben-sarid-a65845182/'}>
               <FaLinkedin />
             </FooterLink>
           </div>
