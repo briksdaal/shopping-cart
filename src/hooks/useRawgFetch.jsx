@@ -19,7 +19,9 @@ export default function useRawgFetch(id) {
     if (cacheRef.current[fullUrl]) {
       setData(cacheRef.current[fullUrl]);
       setError(null);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 100);
       return;
     }
 
