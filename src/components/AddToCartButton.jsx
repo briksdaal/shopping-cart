@@ -1,12 +1,24 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import CartContext from '../contexts/CartContext';
 
-function AddToCartButton({ qty = 0, onChange }) {
+function AddToCartButton({ qty = 0, product }) {
+  const { dispatch } = useContext(CartContext);
+
+  function onAddToCart() {
+    dispatch({ type: 'added_to_cart', product });
+  }
+
   function onIncrement() {
-    onChange(qty + 1);
+    dispatch({ type: 'incremented', id: product.id });
   }
 
   function onDecrement() {
-    onChange(qty - 1);
+    if (qty === 1) {
+      dispatch({ type: 'removed_from_cart', id: product.id });
+    } else {
+      dispatch({ type: 'decremented', id: product.id });
+    }
   }
 
   return (
@@ -28,7 +40,7 @@ function AddToCartButton({ qty = 0, onChange }) {
       ) : (
         <button
           className="rounded-md bg-blue-700 px-6 py-2 text-lg text-white hover:bg-blue-400"
-          onClick={onIncrement}>
+          onClick={onAddToCart}>
           Add to Cart
         </button>
       )}
@@ -38,7 +50,7 @@ function AddToCartButton({ qty = 0, onChange }) {
 
 AddToCartButton.propTypes = {
   qty: PropTypes.number,
-  onChange: PropTypes.func
+  product: PropTypes.object
 };
 
 export default AddToCartButton;

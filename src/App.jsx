@@ -1,12 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import { useState, useRef, useMemo } from 'react';
+import { useReducer, useRef, useMemo } from 'react';
 import CacheContext from './contexts/CacheContext';
 import CartContext from './contexts/CartContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import cartReducer from './helpers/cartReducer';
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, dispatch] = useReducer(cartReducer, []);
   const cacheRef = useRef({});
 
   const numOfItemsInCart = useMemo(
@@ -14,34 +15,11 @@ function App() {
     [cartItems]
   );
 
-  function updateCartItemQty(product) {
-    return (qty) =>
-      setCartItems((currentCart) => {
-        if (qty === 0) {
-          return currentCart.filter((item) => item.id !== product.id);
-        } else if (currentCart.find((item) => item.id === product.id)) {
-          return currentCart.map((item) =>
-            item.id === product.id ? { ...item, qty } : item
-          );
-        } else {
-          return [
-            ...currentCart,
-            {
-              id: product.id,
-              name: product.name,
-              background_image: product.background_image,
-              qty: 1
-            }
-          ];
-        }
-      });
-  }
-
   return (
     <>
       <Header numOfItemsInCart={numOfItemsInCart} />
       <CacheContext.Provider value={cacheRef}>
-        <CartContext.Provider value={{ cartItems, updateCartItemQty }}>
+        <CartContext.Provider value={{ cartItems, dispatch }}>
           <main className="relative z-0 mt-20 flex grow justify-center">
             <Outlet />
           </main>

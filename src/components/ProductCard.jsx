@@ -1,13 +1,15 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import CartViewContext from '../contexts/CartViewContext';
+import CartContext from '../contexts/CartContext';
 import getPrice from '../helpers/generatePriceFromId';
 import { Link } from 'react-router-dom';
 import AddToCartButton from './AddToCartButton';
 import { IoMdClose } from 'react-icons/io';
 
-function ProductCard({ product, qty, onChange }) {
+function ProductCard({ product, qty }) {
   const cartView = useContext(CartViewContext);
+  const { dispatch } = useContext(CartContext);
   return (
     <div
       className={
@@ -19,7 +21,9 @@ function ProductCard({ product, qty, onChange }) {
         <button
           className="absolute right-4 top-4 text-neutral-400 hover:text-neutral-700"
           data-testid="remove-from-cart"
-          onClick={() => onChange(0)}>
+          onClick={() =>
+            dispatch({ type: 'removed_from_cart', id: product.id })
+          }>
           <IoMdClose />
         </button>
       )}
@@ -51,7 +55,7 @@ function ProductCard({ product, qty, onChange }) {
         ${getPrice(product.id)}
       </p>
       <div className="col-span-2 md:col-span-1">
-        <AddToCartButton qty={qty} onChange={onChange} />
+        <AddToCartButton product={product} qty={qty} />
       </div>
     </div>
   );
@@ -59,7 +63,6 @@ function ProductCard({ product, qty, onChange }) {
 
 ProductCard.propTypes = {
   product: PropTypes.object,
-  qty: PropTypes.number,
-  onChange: PropTypes.func
+  qty: PropTypes.number
 };
 export default ProductCard;

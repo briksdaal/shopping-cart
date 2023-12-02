@@ -5,7 +5,7 @@ import CartViewContext from '../contexts/CartViewContext';
 import { useContext } from 'react';
 
 function Products({ data, numOfProductsToShow }) {
-  const { cartItems, updateCartItemQty } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
   const cartView = useContext(CartViewContext);
   let products = data?.results;
   if (!products || !products.length)
@@ -22,10 +22,7 @@ function Products({ data, numOfProductsToShow }) {
       }>
       {products.map((p) => {
         const qty = cartItems.find((item) => item.id === p.id)?.qty;
-        const onChange = updateCartItemQty(p);
-        return (
-          <ProductCard key={p.id} product={p} qty={qty} onChange={onChange} />
-        );
+        return <ProductCard key={p.id} product={p} qty={qty} />;
       })}
     </div>
   );

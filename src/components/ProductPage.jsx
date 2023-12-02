@@ -7,9 +7,8 @@ import AddToCartButton from './AddToCartButton';
 import Title from './Title';
 
 function ProductPage({ data }) {
-  const { cartItems, updateCartItemQty } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
   const qty = cartItems.find((item) => item.id === data.id)?.qty;
-  const onChange = updateCartItemQty(data);
 
   return (
     <div className="flex w-full justify-center bg-sky-50">
@@ -27,7 +26,7 @@ function ProductPage({ data }) {
         <div className="flex flex-col gap-8">
           <div className="flex items-center gap-5">
             <p className="text-2xl text-red-600">${getPrice(data.id)}</p>
-            <AddToCartButton qty={qty} onChange={onChange} />
+            <AddToCartButton qty={qty} product={data} />
           </div>
           <p>{prepareText(data.description_raw)}</p>
         </div>

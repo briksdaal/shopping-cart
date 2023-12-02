@@ -9,7 +9,7 @@ import CacheContext from '../contexts/CacheContext';
 function renderWithContext(id) {
   return render(
     <CacheContext.Provider value={{ current: {} }}>
-      <FetchComponent id={id} child={MockChild} />
+      <FetchComponent id={id} Child={MockChild} />
     </CacheContext.Provider>
   );
 }

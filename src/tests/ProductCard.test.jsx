@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import ProductCard from '../components/ProductCard';
 import getPrice from '../helpers/generatePriceFromId';
 import CartViewContext from '../contexts/CartViewContext';
+import CartContext from '../contexts/CartContext';
 
 const game = {
   id: 65821,
@@ -12,12 +13,14 @@ const game = {
   background_image: 'https://imagesbank.com/2349302'
 };
 
-const onChange = vi.fn();
+const dispatch = vi.fn();
 
 const renderCard = (qty, cartView) => {
   render(
     <CartViewContext.Provider value={cartView}>
-      <ProductCard product={game} qty={qty} onChange={onChange} />
+      <CartContext.Provider value={{ dispatch }}>
+        <ProductCard product={game} qty={qty} />
+      </CartContext.Provider>
     </CartViewContext.Provider>,
     {
       wrapper: ({ children }) => {
@@ -98,14 +101,16 @@ describe('X button tests', () => {
     expect(xButton).toBeInTheDocument();
   });
 
-  it('Clicking X button calls onChange with 0', async () => {
+  it('Clicking X button calls dispatch with removed from cart and product id', async () => {
     const user = userEvent.setup();
     renderCard(3, true);
     const xButton = screen.getByTestId('remove-from-cart');
 
     await user.click(xButton);
 
-    expect(onChange).toHaveBeenCalledOnce();
-    expect(onChange).toHaveBeenCalledWith(0);
+    expect(dispatch).toHaveBeenCalledOnce();
+    expect(dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({ type: 'removed_from_cart', id: game.id })
+    );
   });
 });
