@@ -4,5 +4,5 @@ import ProductPage from './ProductPage';
 
 export default function ProductPageContainer() {
   const { productId } = useParams();
-  return <FetchComponent id={+productId} child={ProductPage} />;
+  return <FetchComponent id={+productId} Child={ProductPage} />;
 }

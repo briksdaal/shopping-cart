@@ -7,7 +7,7 @@ function ShopPage() {
     <div className="flex w-full justify-center bg-sky-50">
       <div className="my-12 max-w-screen-xl px-6 md:my-16">
         <Title>Our Games</Title>
-        <FetchComponent child={Products} />
+        <FetchComponent Child={Products} />
       </div>
     </div>
   );

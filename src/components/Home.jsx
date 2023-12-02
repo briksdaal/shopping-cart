@@ -72,7 +72,7 @@ function Home() {
       <div className="mt-12 flex w-full justify-center bg-sky-50 pb-12 pt-16 md:mt-24 md:pb-24">
         <div className="max-w-screen-xl px-6">
           <Title>Our Top Games</Title>
-          <FetchComponent child={Products} numOfProductsToShow={3} />
+          <FetchComponent Child={Products} numOfProductsToShow={3} />
           <div className="mt-12 flex justify-center md:mt-16">
             <Link
               to="/shop"
