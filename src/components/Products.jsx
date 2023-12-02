@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
+import CartContext from '../contexts/CartContext';
+import CartViewContext from '../contexts/CartViewContext';
+import { useContext } from 'react';
 
-function Products({ data, globalCart, numOfProductsToShow, cartView }) {
+function Products({ data, numOfProductsToShow }) {
+  const { cartItems, updateCartItemQty } = useContext(CartContext);
+  const cartView = useContext(CartViewContext);
   let products = data?.results;
   if (!products || !products.length)
     return <h2 className="text-lg">This seems to be empty...</h2>;
@@ -16,16 +21,10 @@ function Products({ data, globalCart, numOfProductsToShow, cartView }) {
           : 'flex flex-1 flex-col gap-8'
       }>
       {products.map((p) => {
-        const qty = globalCart.cartItems.find((item) => item.id === p.id)?.qty;
-        const onChange = globalCart.updateCartItemQty(p);
+        const qty = cartItems.find((item) => item.id === p.id)?.qty;
+        const onChange = updateCartItemQty(p);
         return (
-          <ProductCard
-            key={p.id}
-            product={p}
-            qty={qty}
-            onChange={onChange}
-            cartView={cartView}
-          />
+          <ProductCard key={p.id} product={p} qty={qty} onChange={onChange} />
         );
       })}
     </div>
@@ -34,8 +33,6 @@ function Products({ data, globalCart, numOfProductsToShow, cartView }) {
 
 Products.propTypes = {
   data: PropTypes.object,
-  globalCart: PropTypes.object,
-  numOfProductsToShow: PropTypes.number,
-  cartView: PropTypes.bool
+  numOfProductsToShow: PropTypes.number
 };
 export default Products;

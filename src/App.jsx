@@ -1,13 +1,18 @@
 import { Outlet } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import CacheContext from './contexts/CacheContext';
+import CartContext from './contexts/CartContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const cacheRef = useRef({});
-  const numOfItemsInCart = cartItems.reduce((acc, cur) => acc + cur.qty, 0);
+
+  const numOfItemsInCart = useMemo(
+    () => cartItems.reduce((acc, cur) => acc + cur.qty, 0),
+    [cartItems]
+  );
 
   function updateCartItemQty(product) {
     return (qty) =>
@@ -36,9 +41,11 @@ function App() {
     <>
       <Header numOfItemsInCart={numOfItemsInCart} />
       <CacheContext.Provider value={cacheRef}>
-        <main className="relative z-0 mt-20 flex grow justify-center">
-          <Outlet context={{ cartItems, updateCartItemQty }} />
-        </main>
+        <CartContext.Provider value={{ cartItems, updateCartItemQty }}>
+          <main className="relative z-0 mt-20 flex grow justify-center">
+            <Outlet />
+          </main>
+        </CartContext.Provider>
       </CacheContext.Provider>
       <Footer />
     </>

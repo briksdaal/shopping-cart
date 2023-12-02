@@ -2,12 +2,7 @@ import useRawgFetch from '../hooks/useRawgFetch';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
 
-function FetchComponent({
-  id,
-  child: ChildComponent,
-  globalCart,
-  numOfProductsToShow
-}) {
+function FetchComponent({ id, child: ChildComponent, numOfProductsToShow }) {
   const [data, loading, error] = useRawgFetch(id);
 
   if (loading) return <Loading />;
@@ -22,18 +17,13 @@ function FetchComponent({
     );
 
   return (
-    <ChildComponent
-      data={data}
-      globalCart={globalCart}
-      numOfProductsToShow={numOfProductsToShow}
-    />
+    <ChildComponent data={data} numOfProductsToShow={numOfProductsToShow} />
   );
 }
 
 FetchComponent.propTypes = {
   id: PropTypes.number,
   child: PropTypes.elementType.isRequired,
-  globalCart: PropTypes.object,
   numOfProductsToShow: PropTypes.number
 };
 

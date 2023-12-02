@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import ProductCard from '../components/ProductCard';
 import getPrice from '../helpers/generatePriceFromId';
+import CartViewContext from '../contexts/CartViewContext';
 
 const game = {
   id: 65821,
@@ -15,12 +16,9 @@ const onChange = vi.fn();
 
 const renderCard = (qty, cartView) => {
   render(
-    <ProductCard
-      product={game}
-      qty={qty}
-      onChange={onChange}
-      cartView={cartView}
-    />,
+    <CartViewContext.Provider value={cartView}>
+      <ProductCard product={game} qty={qty} onChange={onChange} />
+    </CartViewContext.Provider>,
     {
       wrapper: ({ children }) => {
         return <BrowserRouter>{children}</BrowserRouter>;

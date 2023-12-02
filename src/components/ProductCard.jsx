@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
+import CartViewContext from '../contexts/CartViewContext';
 import getPrice from '../helpers/generatePriceFromId';
 import { Link } from 'react-router-dom';
 import AddToCartButton from './AddToCartButton';
 import { IoMdClose } from 'react-icons/io';
 
-function ProductCard({ product, qty, onChange, cartView }) {
+function ProductCard({ product, qty, onChange }) {
+  const cartView = useContext(CartViewContext);
   return (
     <div
       className={
@@ -48,7 +51,7 @@ function ProductCard({ product, qty, onChange, cartView }) {
         ${getPrice(product.id)}
       </p>
       <div className="col-span-2 md:col-span-1">
-        <AddToCartButton qty={qty} onChange={onChange} cartView={cartView} />
+        <AddToCartButton qty={qty} onChange={onChange} />
       </div>
     </div>
   );
@@ -57,7 +60,6 @@ function ProductCard({ product, qty, onChange, cartView }) {
 ProductCard.propTypes = {
   product: PropTypes.object,
   qty: PropTypes.number,
-  onChange: PropTypes.func,
-  cartView: PropTypes.bool
+  onChange: PropTypes.func
 };
 export default ProductCard;

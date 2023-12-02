@@ -1,12 +1,15 @@
 import getPrice from '../helpers/generatePriceFromId';
 import prepareText from '../helpers/prepareText';
 import PropTypes from 'prop-types';
+import CartContext from '../contexts/CartContext';
+import { useContext } from 'react';
 import AddToCartButton from './AddToCartButton';
 import Title from './Title';
 
-function ProductPage({ data, globalCart }) {
-  const qty = globalCart.cartItems.find((item) => item.id === data.id)?.qty;
-  const onChange = globalCart.updateCartItemQty(data);
+function ProductPage({ data }) {
+  const { cartItems, updateCartItemQty } = useContext(CartContext);
+  const qty = cartItems.find((item) => item.id === data.id)?.qty;
+  const onChange = updateCartItemQty(data);
 
   return (
     <div className="flex w-full justify-center bg-sky-50">
@@ -34,8 +37,7 @@ function ProductPage({ data, globalCart }) {
 }
 
 ProductPage.propTypes = {
-  data: PropTypes.object,
-  globalCart: PropTypes.object
+  data: PropTypes.object
 };
 
 export default ProductPage;

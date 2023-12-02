@@ -1,4 +1,4 @@
-import { useOutletContext, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Products from './Products';
 import FetchComponent from './FetchComponent';
 import Title from './Title';
@@ -27,8 +27,6 @@ SellingPointCard.propTypes = {
 };
 
 function Home() {
-  const globalCart = useOutletContext();
-
   const sellingPointCardContent = [
     {
       title: 'Curated Retro Joy',
@@ -74,11 +72,7 @@ function Home() {
       <div className="mt-12 flex w-full justify-center bg-sky-50 pb-12 pt-16 md:mt-24 md:pb-24">
         <div className="max-w-screen-xl px-6">
           <Title>Our Top Games</Title>
-          <FetchComponent
-            child={Products}
-            globalCart={globalCart}
-            numOfProductsToShow={3}
-          />
+          <FetchComponent child={Products} numOfProductsToShow={3} />
           <div className="mt-12 flex justify-center md:mt-16">
             <Link
               to="/shop"

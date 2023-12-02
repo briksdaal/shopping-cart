@@ -19,14 +19,12 @@ const products = {
   ]
 };
 
-const globalCart = { cartItems: [], updateCartItemQty: vi.fn() };
-
 vi.mock('../components/ProductCard', () => ({
   default: ({ product }) => <h2>{product.name}</h2>
 }));
 
 it('Renders products when array is bigger than 0', () => {
-  render(<Products data={products} globalCart={globalCart} />);
+  render(<Products data={products} />);
 
   expect(screen.getAllByRole('heading')).toHaveLength(3);
   expect(
@@ -35,7 +33,7 @@ it('Renders products when array is bigger than 0', () => {
 });
 
 it('Renders empty message when array is empty', () => {
-  render(<Products data={{ results: [] }} globalCart={globalCart} />);
+  render(<Products data={{ results: [] }} />);
 
   expect(
     screen.getByRole('heading', { name: 'This seems to be empty...' })
@@ -44,7 +42,7 @@ it('Renders empty message when array is empty', () => {
 });
 
 it('Renders empty message when no products prop provided', () => {
-  render(<Products globalCart={globalCart} />);
+  render(<Products />);
 
   expect(
     screen.getByRole('heading', { name: 'This seems to be empty...' })
