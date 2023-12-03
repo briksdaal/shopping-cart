@@ -3,23 +3,30 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { expect } from 'vitest';
 import PropTypes from 'prop-types';
-import FetchComponent from '../components/FetchComponent';
+import FetchWrapper from '../components/FetchWrapper';
 import CacheContext from '../contexts/CacheContext';
 
-function renderWithContext(id) {
+function MockChild({ data, extra }) {
+  return (
+    <div>
+      <p>{data.data}</p>
+      {extra && <p>{extra}</p>}
+    </div>
+  );
+}
+
+function renderWithContext(id, extra) {
+  const WrappedChild = FetchWrapper(MockChild, id);
   return render(
     <CacheContext.Provider value={{ current: {} }}>
-      <FetchComponent id={id} Child={MockChild} />
+      <WrappedChild id={id} extra={extra} />
     </CacheContext.Provider>
   );
 }
 
-function MockChild({ data }) {
-  return <div>{data.data}</div>;
-}
-
 MockChild.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  extra: PropTypes.string
 };
 
 const server = setupServer(
@@ -90,4 +97,16 @@ it('Handles errors', async () => {
   expect(screen.getByText('Error: 401')).toBeInTheDocument();
   expect(screen.queryByText('Some data')).not.toBeInTheDocument();
   expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+});
+
+it('Passes on props to child', async () => {
+  renderWithContext(5, 'extra test');
+
+  await screen.findByText('Game #5 data');
+
+  expect(screen.getByText('Game #5 data')).toBeInTheDocument();
+  expect(screen.getByText('extra test')).toBeInTheDocument();
+  expect(screen.queryByText('All games data')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+  expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
 });
